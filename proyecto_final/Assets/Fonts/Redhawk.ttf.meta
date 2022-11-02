@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ee12f269bb4643fb29e5c817f1de4179
+guid: 680388807d95fe63d87281a8387b0a66
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,9 +8,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: MONOCOQUE Demo
+  fontName: Redhawk
   fontNames:
-  - MONOCOQUE Demo
+  - Redhawk
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
