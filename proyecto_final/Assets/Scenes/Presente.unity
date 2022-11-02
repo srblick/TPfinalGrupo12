@@ -6864,6 +6864,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1823782376}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1841663188 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7985796650301480162, guid: c887905ba980bc14688d1170340a966f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7985796649897025387}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1841663189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841663188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c4562d369d7b604d93d328d62d62bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1877827323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10064,7 +10082,7 @@ PrefabInstance:
     - target: {fileID: 556847579517244795, guid: c887905ba980bc14688d1170340a966f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.7487504
+      value: 1.54
       objectReference: {fileID: 0}
     - target: {fileID: 556847579517244795, guid: c887905ba980bc14688d1170340a966f,
         type: 3}
@@ -10110,6 +10128,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PortalFuncional 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7421470686464934288, guid: c887905ba980bc14688d1170340a966f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 7985796650301480160, guid: c887905ba980bc14688d1170340a966f,
         type: 3}

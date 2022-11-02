@@ -8,11 +8,6 @@ public class IconMission : MonoBehaviour
     public int condicion = 1;
     public float contador = 0f;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         //Subida y Bajada

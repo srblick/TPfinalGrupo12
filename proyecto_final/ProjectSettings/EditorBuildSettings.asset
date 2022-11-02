@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Futuro.unity
     guid: 7b533dfe561bc47c8975c955fe4ef3d3
+  - enabled: 1
+    path: Assets/Scenes/LoadScreen.unity
+    guid: 78c41fb2109c66b40addf1a2272046b3
   m_configObjects: {}

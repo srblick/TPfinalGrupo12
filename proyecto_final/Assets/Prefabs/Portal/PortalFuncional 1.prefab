@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portalParticulas: {fileID: 7985796650252063974}
   zonaInteraccion: {fileID: 7985796650301480162}
-  cambiarNivel: {fileID: 7985796650301480167}
+  cambiarNivel: {fileID: 0}
   entrar: 0
 --- !u!1 &5811057062404256643
 GameObject:
@@ -4907,7 +4907,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7985796650301480161}
   - component: {fileID: 7985796650301480160}
-  - component: {fileID: 7985796650301480167}
   m_Layer: 0
   m_Name: ZonaInteraccion
   m_TagString: Untagged
@@ -4942,16 +4941,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7985796650301480167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7985796650301480162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c4562d369d7b604d93d328d62d62bb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  indiceNivel: 1

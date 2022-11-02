@@ -42,4 +42,5 @@ public class PortalComportamiento : MonoBehaviour
            //cambiarNivel.enabled = false; 
         }
     }
+
 }
