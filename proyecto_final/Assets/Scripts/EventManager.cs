@@ -7,6 +7,7 @@ using System;
 [Serializable]
 public class Int2Event : UnityEvent<int,int>{}
 public class BoolEvent : UnityEvent<bool>{}
+public class Bool2int1 : UnityEvent<bool,bool,int>{}
 public class EventManager : MonoBehaviour
 {
     #region Singlenton
@@ -24,4 +25,5 @@ public class EventManager : MonoBehaviour
 
     public BoolEvent NewInstaceGunEvent = new BoolEvent();
     public BoolEvent crossHairChange = new BoolEvent();
+    public Bool2int1 activeWeaponHUD = new Bool2int1();
 }

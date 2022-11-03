@@ -53,9 +53,7 @@ public class PlayerWeaponManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2) && isGrappingSecondaryWeapon){           
             switchWeapon(2);
         }
-        // if (Input.GetKeyDown(KeyCode.Alpha3)){           
-        //     switchWeapon(2);
-        // }
+
         if (Input.GetButtonDown("Aim")&&(isGrappingPrimaryWeapon|| isGrappingSecondaryWeapon)){
             isAiming=!isAiming; 
         }
@@ -80,24 +78,25 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void switchWeapon(int p_weaponIndex){
         isAiming=false;
-        EventManager.current.NewInstaceGunEvent.Invoke(false);
-
+        
         if(p_weaponIndex != activeWeaponIndex && p_weaponIndex >=0){
             weaponSlots[p_weaponIndex].gameObject.SetActive(true);
             activeWeaponIndex = p_weaponIndex;
             EventManager.current.NewInstaceGunEvent.Invoke(true);
             EventManager.current.updateBulletsEvent.Invoke(weaponSlots[p_weaponIndex].currentAmmo,weaponSlots[p_weaponIndex].totalAmmo);
+            EventManager.current.activeWeaponHUD.Invoke(isGrappingPrimaryWeapon,isGrappingSecondaryWeapon,activeWeaponIndex);
         }else if(p_weaponIndex == activeWeaponIndex && p_weaponIndex >=0){
             weaponSlots[p_weaponIndex].gameObject.SetActive(false);
-            activeWeaponIndex = -1;         
+            activeWeaponIndex = -1; 
+            EventManager.current.NewInstaceGunEvent.Invoke(false);
+            EventManager.current.activeWeaponHUD.Invoke(isGrappingPrimaryWeapon,isGrappingSecondaryWeapon,activeWeaponIndex);        
         }
         for(int i=0;i<weaponSlots.Length;i++){
             if (i != p_weaponIndex){
                 weaponSlots[i].gameObject.SetActive(false);
             }
         }
-        
- 
+         
     }
 
     private void addWeapon(WeaponController p_weaponPrefab){
@@ -146,7 +145,6 @@ public class PlayerWeaponManager : MonoBehaviour
                 if(hit.transform.GetComponent<GrabableWeapon>().typeWeapon == 2 && Input.GetKeyDown(KeyCode.E)){
                     isGrappingSecondaryWeapon=true;
                     switchWeapon(2);
-                    
                     Destroy(hit.transform.gameObject);
                 }
             }
@@ -154,23 +152,24 @@ public class PlayerWeaponManager : MonoBehaviour
     }
 
     private void dropWeapon(int activeWeaponIndex){
+
         if(activeWeaponIndex>=-1){
             switch (activeWeaponIndex)
             {
                 case 0:
                     isGrappingPrimaryWeapon=false;
-                    switchWeapon(-1);
-                    Instantiate(grabableWeapons[0],dropParentSocket.position,Quaternion.identity);
+                    switchWeapon(activeWeaponIndex);
+                    Instantiate(grabableWeapons[activeWeaponIndex],dropParentSocket.position,Quaternion.identity);
                     break;
                 case 1:
                     isGrappingPrimaryWeapon=false;
-                    switchWeapon(-1);
-                    Instantiate(grabableWeapons[1],dropParentSocket.position,Quaternion.identity);
+                    switchWeapon(activeWeaponIndex);
+                    Instantiate(grabableWeapons[activeWeaponIndex],dropParentSocket.position,Quaternion.identity);
                     break;
                 case 2:
                     isGrappingSecondaryWeapon=false;
-                    switchWeapon(-1);
-                    Instantiate(grabableWeapons[2],dropParentSocket.position,Quaternion.identity);
+                    switchWeapon(activeWeaponIndex);
+                    Instantiate(grabableWeapons[activeWeaponIndex],dropParentSocket.position,Quaternion.identity);
                     break;
             }      
         }

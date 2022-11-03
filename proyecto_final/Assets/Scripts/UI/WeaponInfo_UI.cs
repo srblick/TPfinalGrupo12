@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class WeaponInfo_UI : MonoBehaviour
 {
+    
     public TMP_Text currentBullets;
     public TMP_Text totalBullets;
 
     private void OnEnable() {
-        EventManager.current.updateBulletsEvent.AddListener(updateBullets);
+        EventManager.current.updateBulletsEvent.AddListener(updateBullets);  
     }
 
     private void OnDisable() {
@@ -31,4 +33,6 @@ public class WeaponInfo_UI : MonoBehaviour
         currentBullets.text = newCurrentBullets.ToString();
         totalBullets.text = newTotalBullets.ToString();
     }
+
+    
 }
