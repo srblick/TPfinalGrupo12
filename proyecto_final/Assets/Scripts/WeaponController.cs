@@ -10,6 +10,7 @@ public class WeaponController : MonoBehaviour
 {
     [Header ("References")]
     [SerializeField] private Transform weaponMuzzle;
+    [SerializeField] private Animator animator;
     
     [Header ("General")]
     [SerializeField] private LayerMask hittableLayers;
@@ -43,6 +44,8 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private TrailRenderer bulletTrail;
     [SerializeField] private AudioClip reloadSfx;
     [SerializeField] private AudioClip bulletFall;
+    // [SerializeField] private AudioClip shootSfx;
+    [SerializeField] private AudioClip dryBulletsSfx;
     [SerializeField] private GameObject bulletHolePrefab;
 
     public int currentAmmo {get; private set;}
@@ -58,8 +61,16 @@ public class WeaponController : MonoBehaviour
         currentAmmo=magazineCapacity;
         EventManager.current.updateBulletsEvent.Invoke(currentAmmo,totalAmmo);
     }
+    // private void OnDisable() {// no estaria funcionando esto :/
+    //     lastTimeShoot=2.5f; // para que espere la animacion de salida antes de disparar
+
+    // }
     void Start()
     {   
+        if(GetComponent<Animator>() != null){
+            animator= GetComponent<Animator>();
+        }
+        
         currentRecoilForce=recoilForce;
         player_script = GameObject.Find("Player").GetComponent<PlayerWeaponManager>();
         cameraPlayerTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
@@ -71,8 +82,10 @@ public class WeaponController : MonoBehaviour
     {
         if(player_script.isAiming){
             currentRecoilForce = recoilForce/2;
+            animator.SetBool("isAiming",true);
         }else{
             currentRecoilForce = recoilForce;
+            animator.SetBool("isAiming",false);
         }
         if(shootType == ShootType.Manual){
             if (Input.GetButtonDown("Fire1") && !isReloading){
@@ -83,6 +96,9 @@ public class WeaponController : MonoBehaviour
             if (Input.GetButton("Fire1") && !isReloading){
                 tryShoot();
             }
+        }
+        if(Input.GetButtonDown("Fire1")&&currentAmmo<=0){
+            audioSource.PlayOneShot(dryBulletsSfx);
         }
         if(Input.GetKeyDown(KeyCode.R) && totalAmmo>=1 && currentAmmo!=magazineCapacity){
             if(!isReloading){
@@ -105,7 +121,6 @@ public class WeaponController : MonoBehaviour
         recoilCamera_script.recoilFire();
         audioSource.Play();
         audioSource.PlayOneShot(bulletFall);
-        // Instantiate(flashEffect, weaponMuzzle.position,Quaternion.Euler(weaponMuzzle.forward),transform);
         flashEffect.Play();
         addRecoil();
 
@@ -116,6 +131,9 @@ public class WeaponController : MonoBehaviour
             Destroy(hitImpactClone,0.5f);
             StartCoroutine(spawnTrail(trail,hit));
             //codigo que hace daño al enemigo
+            // if(hit.transform.tag == "Enemy"){
+            //     hit.transform.GetComponent<EnemyBehavior>().sufferDamage(1);
+            // }
         }
         lastTimeShoot=Time.time;
     }
@@ -143,9 +161,10 @@ public class WeaponController : MonoBehaviour
     }
 
     private IEnumerator reload(){
+        player_script.setIsAiming(false);
+        animator.SetTrigger("Reloading");
         isReloading=true;
         int neededAmmo = magazineCapacity-currentAmmo;
-        Debug.Log("Recargando");
         audioSource.PlayOneShot(reloadSfx);
         yield return new WaitForSeconds(reloadTime);
         if(totalAmmo>magazineCapacity){
@@ -163,10 +182,12 @@ public class WeaponController : MonoBehaviour
         
         isReloading=false;
         EventManager.current.updateBulletsEvent.Invoke(currentAmmo,totalAmmo);
-        Debug.Log("Recargada");
     }
 
     public void reloadAmmo(int bullets){
         totalAmmo += bullets;
+    }
+    public void hide(){
+        animator.SetTrigger("Hiding");
     }
 }

@@ -28,12 +28,13 @@ public class PlayerWeaponManager : MonoBehaviour
     private bool isGrappingPrimaryWeapon=false;
     private bool isGrappingSecondaryWeapon=false;
     private bool isUsingFuturistWeapon=false;
+    private float currentRotationSensibility;
     // Start is called before the first frame update
     void Start()
     {
+        currentRotationSensibility=GetComponent<PlayerController>().rotationSensibility;
         isAiming=false;
         activeWeaponIndex=-1;
-
         foreach (WeaponController startingWeapon in startingWeapons){
             addWeapon(startingWeapon);
         }
@@ -44,14 +45,14 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && isGrappingPrimaryWeapon){
             if(isUsingFuturistWeapon){
-                switchWeapon(0);
+                StartCoroutine(switchWeapon(0));
             }else{
-                switchWeapon(1);
+                StartCoroutine(switchWeapon(1));
             }
             
         }
         if (Input.GetKeyDown(KeyCode.Alpha2) && isGrappingSecondaryWeapon){           
-            switchWeapon(2);
+            StartCoroutine(switchWeapon(2));
         }
 
         if (Input.GetButtonDown("Aim")&&(isGrappingPrimaryWeapon|| isGrappingSecondaryWeapon)){
@@ -64,39 +65,48 @@ public class PlayerWeaponManager : MonoBehaviour
             weaponParentSocket.position= Vector3.Lerp(weaponParentSocket.position,aimingParentSocket.position,12f*Time.deltaTime); 
             cameraPlayer.fieldOfView = Mathf.Lerp(cameraPlayer.fieldOfView, defaultFovPlayer/4, 12f * Time.deltaTime);
             cameraWeapon.fieldOfView = Mathf.Lerp(cameraWeapon.fieldOfView, defaultFovWeapon/2, 12f * Time.deltaTime);
-            GetComponent<PlayerController>().rotationSensibility=60;
+            GetComponent<PlayerController>().rotationSensibility=currentRotationSensibility/2;
         }else{             
             weaponParentSocket.position= Vector3.Lerp(weaponParentSocket.position,defaultParentSocket.position,12f*Time.deltaTime);
             cameraPlayer.fieldOfView = Mathf.Lerp(cameraPlayer.fieldOfView, defaultFovPlayer, 12f * Time.deltaTime);
             cameraWeapon.fieldOfView = Mathf.Lerp(cameraWeapon.fieldOfView, defaultFovWeapon, 12f * Time.deltaTime);
-            //cambiar tambien la sensibilidad del player
-            GetComponent<PlayerController>().rotationSensibility=150;
+            GetComponent<PlayerController>().rotationSensibility=currentRotationSensibility;
         }
 
-        agarrar();
+        interactuar();
     }
 
-    private void switchWeapon(int p_weaponIndex){
+    private IEnumerator switchWeapon(int p_weaponIndex){
         isAiming=false;
-        
+        int activeWeaponIndexBefore;// variable que cambiar el index anterior
         if(p_weaponIndex != activeWeaponIndex && p_weaponIndex >=0){
+            if(activeWeaponIndex>=0){//esconde el arma anterior
+                activeWeaponIndexBefore=activeWeaponIndex;
+                weaponSlots[activeWeaponIndexBefore].hide();
+                yield return new WaitForSeconds(0.2f);
+                EventManager.current.NewInstaceGunEvent.Invoke(false);
+                weaponSlots[activeWeaponIndexBefore].gameObject.SetActive(false);
+            }
             weaponSlots[p_weaponIndex].gameObject.SetActive(true);
             activeWeaponIndex = p_weaponIndex;
             EventManager.current.NewInstaceGunEvent.Invoke(true);
             EventManager.current.updateBulletsEvent.Invoke(weaponSlots[p_weaponIndex].currentAmmo,weaponSlots[p_weaponIndex].totalAmmo);
             EventManager.current.activeWeaponHUD.Invoke(isGrappingPrimaryWeapon,isGrappingSecondaryWeapon,activeWeaponIndex);
         }else if(p_weaponIndex == activeWeaponIndex && p_weaponIndex >=0){
+            
+            weaponSlots[p_weaponIndex].hide();
+            yield return new WaitForSeconds(0.2f);
             weaponSlots[p_weaponIndex].gameObject.SetActive(false);
             activeWeaponIndex = -1; 
             EventManager.current.NewInstaceGunEvent.Invoke(false);
             EventManager.current.activeWeaponHUD.Invoke(isGrappingPrimaryWeapon,isGrappingSecondaryWeapon,activeWeaponIndex);        
         }
-        for(int i=0;i<weaponSlots.Length;i++){
-            if (i != p_weaponIndex){
-                weaponSlots[i].gameObject.SetActive(false);
-            }
-        }
-         
+        // for(int i=0;i<weaponSlots.Length;i++){
+        //     if (i != p_weaponIndex){
+        //         weaponSlots[i].gameObject.SetActive(false);
+        //     }
+        // }
+
     }
 
     private void addWeapon(WeaponController p_weaponPrefab){
@@ -114,10 +124,10 @@ public class PlayerWeaponManager : MonoBehaviour
             }   
     }
 
-    private void agarrar(){
+    private void interactuar(){
         RaycastHit hit;
-        if(Physics.Raycast(cameraPlayer.transform.position,cameraPlayer.transform.forward, out hit, 3.5f, hittableLayers)){
-        //    Debug.Log(hit.transform.tag);
+        if(Physics.Raycast(cameraPlayer.transform.position,cameraPlayer.transform.forward, out hit, 2.5f, hittableLayers)){
+            
             if(hit.transform.tag == "ArmaAgarrable"){
                 EventManager.current.crossHairChange.Invoke(true);
 
@@ -128,7 +138,7 @@ public class PlayerWeaponManager : MonoBehaviour
                         }
                         isUsingFuturistWeapon=true;
                         isGrappingPrimaryWeapon=true;
-                        switchWeapon(0);
+                        StartCoroutine(switchWeapon(0));
                         Destroy(hit.transform.gameObject);
                     }else{
                         if(isGrappingPrimaryWeapon){
@@ -136,7 +146,7 @@ public class PlayerWeaponManager : MonoBehaviour
                         }
                         isUsingFuturistWeapon=false;
                         isGrappingPrimaryWeapon=true;
-                        switchWeapon(1);
+                        StartCoroutine(switchWeapon(1));
                         Destroy(hit.transform.gameObject);
                     }
                     
@@ -144,10 +154,20 @@ public class PlayerWeaponManager : MonoBehaviour
             
                 if(hit.transform.GetComponent<GrabableWeapon>().typeWeapon == 2 && Input.GetKeyDown(KeyCode.E)){
                     isGrappingSecondaryWeapon=true;
-                    switchWeapon(2);
+                    StartCoroutine(switchWeapon(2));
                     Destroy(hit.transform.gameObject);
                 }
+            }else{
+                EventManager.current.crossHairChange.Invoke(false);
             }
+            // if(hit.transform.tag=="Enemy"){
+            //     if(activeWeaponIndex<=-1 && Input.GetButtonDown("Fire1")){
+            //         //Codigo que hace daño al enemigo a melee
+            //         // hit.transform.GetComponent<EnemyBehavior>().sufferDamage(1);
+            //     }
+            // }
+        }else {
+            EventManager.current.crossHairChange.Invoke(false);
         }
     }
 
@@ -158,20 +178,23 @@ public class PlayerWeaponManager : MonoBehaviour
             {
                 case 0:
                     isGrappingPrimaryWeapon=false;
-                    switchWeapon(activeWeaponIndex);
+                    StartCoroutine(switchWeapon(activeWeaponIndex));
                     Instantiate(grabableWeapons[activeWeaponIndex],dropParentSocket.position,Quaternion.identity);
                     break;
                 case 1:
                     isGrappingPrimaryWeapon=false;
-                    switchWeapon(activeWeaponIndex);
+                    StartCoroutine(switchWeapon(activeWeaponIndex));
                     Instantiate(grabableWeapons[activeWeaponIndex],dropParentSocket.position,Quaternion.identity);
                     break;
                 case 2:
                     isGrappingSecondaryWeapon=false;
-                    switchWeapon(activeWeaponIndex);
+                    StartCoroutine(switchWeapon(activeWeaponIndex));
                     Instantiate(grabableWeapons[activeWeaponIndex],dropParentSocket.position,Quaternion.identity);
                     break;
             }      
         }
+    }
+    public void setIsAiming(bool active){
+        isAiming=active;
     }
 }

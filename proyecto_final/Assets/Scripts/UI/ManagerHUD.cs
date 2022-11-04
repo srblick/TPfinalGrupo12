@@ -18,9 +18,10 @@ public class ManagerHUD : MonoBehaviour
 
     private Color color= Color.white;
     private int activeIndex;
-
+    // private bool state;
     private void Start() {
         Cursor.visible=false;
+        Application.targetFrameRate=60;
     }
     private void OnEnable() {
         EventManager.current.NewInstaceGunEvent.AddListener(createWeaponInfo);
@@ -40,14 +41,13 @@ public class ManagerHUD : MonoBehaviour
         }
         
     }
-    private void Update() {
-        dotCrossHair.color= Color.green;
-        mensajeAgarrar.gameObject.SetActive(false);
-    }
     private void changeColorCrosshairSelect(bool isActive){
         if(isActive){
             dotCrossHair.color= Color.white;
             mensajeAgarrar.gameObject.SetActive(true);
+        }else{
+            dotCrossHair.color= Color.green;
+            mensajeAgarrar.gameObject.SetActive(false);
         }
     }
     private void addWeaponHUD(bool primaryWeapon, bool secondaryweapon, int activeWeaponIndex){

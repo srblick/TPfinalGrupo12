@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 840446851999504436}
   - component: {fileID: 7527263703913029023}
   - component: {fileID: 7453011337273121203}
+  - component: {fileID: 6561038750952535754}
   m_Layer: 8
   m_Name: SciFiGun
   m_TagString: PrimaryWeapon
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponMuzzle: {fileID: 6789853432365985970}
+  animator: {fileID: 0}
   hittableLayers:
     serializedVersion: 2
     m_Bits: 55
@@ -73,6 +75,8 @@ MonoBehaviour:
     type: 3}
   reloadSfx: {fileID: 8300000, guid: 2868e580baee45d449931dc35a5ace81, type: 3}
   bulletFall: {fileID: 8300000, guid: 51fcf928d40b7f943ba156c18dfe3280, type: 3}
+  shootSfx: {fileID: 8300000, guid: 1e940d15337ad1e43b0cc1b2430d7c06, type: 3}
+  dryBulletsSfx: {fileID: 8300000, guid: cb95702ce3bbb8842aa8505f8b6341ed, type: 3}
   bulletHolePrefab: {fileID: 4675405324371872474, guid: 1f2779df0af1d914a97431948ced2daf,
     type: 3}
 --- !u!114 &7527263703913029023
@@ -183,6 +187,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &6561038750952535754
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7605073495796536022}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4f1abdec1a5c6e14a9c4d43113424ae6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7810312955634121029
 GameObject:
   m_ObjectHideFlags: 0

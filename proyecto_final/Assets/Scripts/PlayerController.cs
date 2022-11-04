@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravityScale = -20f;
 
     [Header ("Movement")]
-    [SerializeField] private float walkSpeed = 5f; 
+    [SerializeField] private float walkSpeed = 4f; 
+    [SerializeField] private float runSpeed = 7f;
     
     [Header ("Jump")]
     [SerializeField] private float jumpHeight = 1.9f;
@@ -35,7 +36,12 @@ public class PlayerController : MonoBehaviour
     private void move(){
         if( characterController.isGrounded){
             moveInput = new Vector3(Input.GetAxis("Horizontal"),0f,Input.GetAxis("Vertical"));
-            moveInput = transform.TransformDirection(moveInput) * walkSpeed;
+            if(Input.GetKey(KeyCode.LeftShift)){
+                moveInput = transform.TransformDirection(moveInput) * runSpeed;
+            }else{
+                moveInput = transform.TransformDirection(moveInput) * walkSpeed;
+            }
+            
 
             if(Input.GetButtonDown("Jump")){
                 moveInput.y = Mathf.Sqrt(jumpHeight* -2f * gravityScale);
@@ -52,7 +58,7 @@ public class PlayerController : MonoBehaviour
         rotationInput.y = Input.GetAxis("Mouse Y") * rotationSensibility * Time.deltaTime;
 
         cameraVerticalAngle += rotationInput.y;
-        cameraVerticalAngle = Mathf.Clamp(cameraVerticalAngle,-50,90);
+        cameraVerticalAngle = Mathf.Clamp(cameraVerticalAngle,-70,85);
 
         transform.Rotate(Vector3.up * rotationInput.x);
         playerCamera.localRotation=Quaternion.Euler(-cameraVerticalAngle,0f,0f);
