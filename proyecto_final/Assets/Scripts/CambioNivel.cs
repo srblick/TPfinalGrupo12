@@ -9,6 +9,7 @@ public class CambioNivel : MonoBehaviour
 {   
     public void OnTriggerEnter(Collider other)
     {
+        //Detecta la Escena/Nivel en la que estamos y devulve su numero de indice
         int Scene = SceneManager.GetActiveScene().buildIndex;
 
         if (other.tag == "Player")
