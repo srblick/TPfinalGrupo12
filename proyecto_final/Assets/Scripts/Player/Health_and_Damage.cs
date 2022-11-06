@@ -29,7 +29,7 @@ public class Health_and_Damage : MonoBehaviour
 		{
 			vidaActual -= cantidad;
 			StartCoroutine(Invulnerabilidad());
-			StartCoroutine(FrenarVelocidad());
+			// StartCoroutine(FrenarVelocidad());
 			if (vidaActual == 0)
 			{
 				GetComponent<Respawn>().RespawnPoint();
@@ -46,13 +46,13 @@ public class Health_and_Damage : MonoBehaviour
 		invencible = false;
 	}
 
-	IEnumerator FrenarVelocidad()
-	{
-		var VelocidadActual = GetComponent<logicaPersonaje>().velocidadInicial;
-		GetComponent<logicaPersonaje>().velocidadInicial = 0;
-		yield return new WaitForSeconds(tiempo_frenado);
-		GetComponent<logicaPersonaje>().velocidadInicial = VelocidadActual;
-	}
+	// IEnumerator FrenarVelocidad()
+	// {
+	// 	var VelocidadActual = GetComponent<logicaPersonaje>().velocidadInicial;
+	// 	GetComponent<logicaPersonaje>().velocidadInicial = 0;
+	// 	yield return new WaitForSeconds(tiempo_frenado);
+	// 	GetComponent<logicaPersonaje>().velocidadInicial = VelocidadActual;
+	// }
 
 	public void VerVida()
 	{
