@@ -131,9 +131,9 @@ public class WeaponController : MonoBehaviour
             Destroy(hitImpactClone,0.5f);
             StartCoroutine(spawnTrail(trail,hit));
             //codigo que hace daño al enemigo
-            // if(hit.transform.tag == "Enemy"){
-            //     hit.transform.GetComponent<EnemyBehavior>().sufferDamage(1);
-            // }
+            if(hit.transform.tag == "Enemy"){
+                hit.transform.GetComponent<EnemyBehaviour>().sufferDamage(1);
+            }
         }
         lastTimeShoot=Time.time;
     }
