@@ -23,7 +23,7 @@ public class ManagerHUD : MonoBehaviour
         Cursor.visible=false;
         Application.targetFrameRate=60;
     }
-    private void OnEnable() {
+    private void OnEnable() {//al activarse este Objeto añade escuchadores
         EventManager.current.NewInstaceGunEvent.AddListener(createWeaponInfo);
         EventManager.current.crossHairChange.AddListener(changeColorCrosshairSelect);
         EventManager.current.activeWeaponHUD.AddListener(addWeaponHUD);
@@ -33,6 +33,8 @@ public class ManagerHUD : MonoBehaviour
         EventManager.current.crossHairChange.RemoveListener(changeColorCrosshairSelect);
         EventManager.current.activeWeaponHUD.RemoveListener(addWeaponHUD);
     }
+
+    //Metodo que crea o destruye el canvas donde se ven las balas
     public void createWeaponInfo(bool isActive){
         if (isActive){
             weaponInfoPrefabClone= Instantiate(weaponInfoPrefab,transform);
@@ -41,6 +43,8 @@ public class ManagerHUD : MonoBehaviour
         }
         
     }
+
+    //Metodo que cambia el color de la mira y muestra un mensaje
     private void changeColorCrosshairSelect(bool isActive){
         if(isActive){
             dotCrossHair.color= Color.white;
@@ -50,8 +54,10 @@ public class ManagerHUD : MonoBehaviour
             mensajeAgarrar.gameObject.SetActive(false);
         }
     }
+
+    //Metodo que añade al hud las armas que el player tiene el en inventario
     private void addWeaponHUD(bool primaryWeapon, bool secondaryweapon, int activeWeaponIndex){
-        switch (activeWeaponIndex)
+        switch (activeWeaponIndex)// switch que se utiliza para cambiar los valores de los indice de 0,1,2 a 0,1
         {
             case 0:
                 activeIndex=0;
@@ -89,7 +95,9 @@ public class ManagerHUD : MonoBehaviour
         }else{
             weaponsHUD[1].gameObject.SetActive(false);
         }
-    }   
+    }
+
+    //Metodo que activa visualmente el hud del arma activa   
     private void activeWeaponHUD(int index){
         for(int i = 0; i<2 ;i++){
             if(i == activeIndex){
