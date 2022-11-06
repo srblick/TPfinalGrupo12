@@ -18,6 +18,7 @@ public class WeaponInfo_UI : MonoBehaviour
         EventManager.current.updateBulletsEvent.RemoveListener(updateBullets);
     }
 
+    //Método que actualiza la informacion de las balas y cambia el color a rojo si llega a 0
     public void updateBullets(int newCurrentBullets, int newTotalBullets){
 
         if(newCurrentBullets<=0){
