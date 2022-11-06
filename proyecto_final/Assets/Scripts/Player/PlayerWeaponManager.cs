@@ -166,8 +166,6 @@ public class PlayerWeaponManager : MonoBehaviour
             }
             if(hit.transform.tag=="Premio"){
                 EventManager.current.crossHairChange.Invoke(true);
-            }else{
-                EventManager.current.crossHairChange.Invoke(false);
             }
             // if(hit.transform.tag=="Enemy"){
             //     if(activeWeaponIndex<=-1 && Input.GetButtonDown("Fire1")){
