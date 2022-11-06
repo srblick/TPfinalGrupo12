@@ -21,7 +21,11 @@ public class IrCueva : MonoBehaviour
         if (other.tag == "Player")
         {
             //Cambia la posicion del jugador
+            Player.GetComponent<CharacterController>().enabled = false;
+            Player.GetComponent<PlayerController>().enabled = false;
             Player.transform.position = Spawn.position;
+            Player.GetComponent<CharacterController>().enabled = true;
+            Player.GetComponent<PlayerController>().enabled = true;
         }
     }    
 }
