@@ -9,7 +9,8 @@ G: soltar arma
 
 
 Instrucciones sobre como utilizar el player prefab:
-1 Crear en el PreferecesSettings/InputManagar el boton "Aim" con el boton primario "mouse 1".
+1 Crear en el PreferecesSettings/InputManagar el boton "Aim" con el boton primario 
+"mouse 1".
 2 Arrastrar el player (prefab) a la escena.
 3 Arrastrar el HUD (prefab) al Hierarchy.
 4 Arrastrar el EventManager (prefab) al Hierarchy.
