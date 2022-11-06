@@ -5,13 +5,11 @@ using UnityEngine;
 public class Sway : MonoBehaviour
 {
     private Quaternion originLocalRotation;
-    // Start is called before the first frame update
     void Start()
     {
         originLocalRotation = transform.localRotation;
     }
 
-    // Update is called once per frame
     void Update()
     {
         updateSway();
