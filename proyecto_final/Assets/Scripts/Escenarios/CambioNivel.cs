@@ -25,7 +25,7 @@ public class CambioNivel : MonoBehaviour
                 break;
 
                 case 2:
-                 LevelLoader.LoadLevel("Presente");
+                 LevelLoader.LoadLevel("Fin");
                 break;
             }
         }

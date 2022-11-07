@@ -32,7 +32,7 @@ public class MainPanelBehaviour : MonoBehaviour
 
     public void NewGameButton(string scene){
         Debug.Log("Nuevo Juego");
-        SceneManager.LoadScene(scene); // carga la escena del juego que se indique
+        SceneManager.LoadScene(0); // carga la escena del juego que se indique
     }
 
     /** termino el juego cuando se hace click en el boton exit. */
