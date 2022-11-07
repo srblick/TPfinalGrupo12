@@ -20,10 +20,14 @@ public class IrCueva : MonoBehaviour
         //Ve si el objeto que coliciona es Player
         if (other.tag == "Player")
         {
-            //Cambia la posicion del jugador
+            //Desactiva los controles del jugador
             Player.GetComponent<CharacterController>().enabled = false;
             Player.GetComponent<PlayerController>().enabled = false;
+
+            //Cambia la posicion del jugador
             Player.transform.position = Spawn.position;
+
+            //Activa los controles del jugador
             Player.GetComponent<CharacterController>().enabled = true;
             Player.GetComponent<PlayerController>().enabled = true;
         }

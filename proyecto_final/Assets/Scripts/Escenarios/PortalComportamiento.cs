@@ -20,7 +20,7 @@ public class PortalComportamiento : MonoBehaviour
         //Detecta la Escena/Nivel en la que estamos y devulve su numero de indice
         int Scene = SceneManager.GetActiveScene().buildIndex;
 
-        if(Scene == 0)
+        if(Scene == 1)
         {
             //Activa las funciones del portal
             portalParticulas.SetActive(true);

@@ -13,7 +13,9 @@ public class Premio : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.E))
             {
+                //Cuando el jugador toque E se sumara un punto
                 puntos++;
+                //Y se desactivara el objeto Premio
                 gameObject.SetActive(false);
             }
         }

@@ -14,17 +14,18 @@ public class CambioNivel : MonoBehaviour
 
         if (other.tag == "Player")
         {
+            //Cambia la Escena segun el indice
             switch (Scene)
             {
-                case 0:
+                case 1:
                  LevelLoader.LoadLevel("Pasado");
                 break;
 
-                case 1:
+                case 2:
                  LevelLoader.LoadLevel("Futuro");
                 break;
 
-                case 2:
+                case 3:
                  LevelLoader.LoadLevel("Fin");
                 break;
             }
